@@ -2,6 +2,16 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <cstdlib>
+
+std::string opened_file_path;
+
+void compress_file(GtkWidget *widget, gpointer data) {
+    if (!opened_file_path.empty()) {
+        std::string command = "./SircComp -c \"" + opened_file_path + "\"";
+        system(command.c_str());
+    }
+}
 
 void open_file(GtkWidget *widget, gpointer data) {
     GtkWidget *dialog;
@@ -32,6 +42,10 @@ void open_file(GtkWidget *widget, gpointer data) {
         GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
         gtk_text_buffer_set_text(text_buffer, content.c_str(), -1);
 
+        opened_file_path = filename;
+        GtkWidget *compress_button = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "compress_button"));
+        gtk_widget_set_sensitive(compress_button, TRUE);
+
         g_free(filename);
     }
 
@@ -41,7 +55,8 @@ void open_file(GtkWidget *widget, gpointer data) {
 int main(int argc, char *argv[]) {
     GtkWidget *window;
     GtkWidget *vbox;
-    GtkWidget *button;
+    GtkWidget *open_button;
+    GtkWidget *compress_button;
     GtkWidget *text_view;
     GtkWidget *scrolled_window;
 
@@ -56,9 +71,14 @@ int main(int argc, char *argv[]) {
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
-    button = gtk_button_new_with_label("Open File");
-    g_signal_connect(button, "clicked", G_CALLBACK(open_file), window);
-    gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
+    open_button = gtk_button_new_with_label("Open File");
+    g_signal_connect(open_button, "clicked", G_CALLBACK(open_file), window);
+    gtk_box_pack_start(GTK_BOX(vbox), open_button, FALSE, FALSE, 0);
+
+    compress_button = gtk_button_new_with_label("Compress");
+    gtk_widget_set_sensitive(compress_button, FALSE);
+    g_signal_connect(compress_button, "clicked", G_CALLBACK(compress_file), NULL);
+    gtk_box_pack_start(GTK_BOX(vbox), compress_button, FALSE, FALSE, 0);
 
     scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -69,6 +89,7 @@ int main(int argc, char *argv[]) {
     gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
 
     g_object_set_data(G_OBJECT(window), "text_view", text_view);
+    g_object_set_data(G_OBJECT(window), "compress_button", compress_button);
 
     gtk_widget_show_all(window);
 
