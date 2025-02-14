@@ -49,3 +49,12 @@ Opciones:
   -x, --decompress    Descomprime el archivo indicado
   -e, --encrypt       Encripta el archivo indicado
   -d, --decrypt       Desencripta el archivo indicado
+
+```
+
+## Interfaz Gráfica de Usuario (GUI)
+
+La GUI permite al usuario interactuar con el programa a través de dos botones principales:
+
+1. Abrir un archivo de texto: Permite seleccionar y cargar un archivo ```.txt``` para su compresión.
+2. Comprimir: Comprime el archivo seleccionado utilizando el algoritmo LZW y lo guarda con una extensión ```.sirc```.
