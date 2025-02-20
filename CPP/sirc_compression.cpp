@@ -80,11 +80,11 @@ vector<int> lzw_compress(const string& input) {
 void save_compressed_file(const string& filename, const vector<int>& compressed) {
     ofstream output_file(filename, ios::binary);
     for (int code : compressed) {
-        while (code >= 0x80) {
-            output_file.put((code & 0x7F) | 0x80);
-            code >>= 7;
+        while (code >= 0x80) { // Si tienes mas de 7 bits (128 en dec)
+            output_file.put((code & 0x7F) | 0x80); // Extrae los 7 bits menos significativos de code // con un and 01111111 Luego agregamos 1000000 con 0x80 con un or
+            code >>= 7; // Desplaza code 7 bits a la derecha 
         }
-        output_file.put(code & 0x7F);
+        output_file.put(code & 0x7F); // Agrega los 7 bits menos significativos de code
     }
     output_file.close();
 }
@@ -97,10 +97,10 @@ vector<int> read_compressed_file(const string& filename) {
     char byte;
 
     while (input_file.get(byte)) {
-        code |= (byte & 0x7F) << shift;
-        if (byte & 0x80) {
+        code |= (byte & 0x7F) << shift; // Se extraen los 7 bits menos significativos de byte y se desplazan shift bits a la izquierda
+        if (byte & 0x80) { // Si hay mas bytes, acumulamos mas bits pa leer (Aumentamos el shift)
             shift += 7;
-        } else {
+        } else { // Si no, guardamos el codigo y reiniciamos
             compressed.push_back(code);
             code = 0;
             shift = 0;
