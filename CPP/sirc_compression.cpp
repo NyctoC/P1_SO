@@ -8,7 +8,7 @@
 
 using namespace std;
 
-#define VERSION "1.2"
+#define VERSION "2.0"
 
 void show_help() {
     cout << "Uso: ./SircComp [opciones] <archivo>\n";
