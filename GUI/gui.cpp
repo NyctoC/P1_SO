@@ -1,3 +1,6 @@
+// Disclaimer: Este codigo no me pertenece ni fue escrito por mi.
+// Fue tomado de GeekForGeeks: How to create GUI in C programming using GTK Toolkit y adaptado a mis necesidades con IA
+
 #include <gtk/gtk.h>
 #include <fstream>
 #include <sstream>

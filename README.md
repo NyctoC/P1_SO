@@ -7,9 +7,9 @@ Parcial 1 Sistemas Operativos - Compresión
 
 ## Características
 
-- **Compresión LZW**: Utiliza el algoritmo LZW para comprimir archivos de texto.
-- **Descompresión**: Descomprime archivos comprimidos utilizando LZW.
-- **Encriptación y Desencriptación**: Permite encriptar y desencriptar archivos de texto (en la versión actual, se guarda el archivo comprimido como encriptado).
+- **Compresión LZW**: Utiliza el algoritmo *LZW* para comprimir archivos de texto.
+- **Descompresión**: Descomprime archivos comprimidos utilizando *LZW*.
+- **Bonus: Encriptación y Desencriptación**: Permite encriptar y desencriptar archivos de texto con una implementación basica del *Teorema de Euler*.
 - **Interfaz de Línea de Comandos (CLI)**: Permite interactuar con el programa mediante opciones de línea de comandos.
 - **Interfaz Gráfica de Usuario (GUI)**: Proporciona una interfaz simple con botones para abrir archivos y comprimirlos.
 
@@ -17,7 +17,7 @@ Parcial 1 Sistemas Operativos - Compresión
 
 - Sistema operativo Linux.
 - C++11 o superior.
-- Bibliotecas estándar de C++.
+- Bibliotecas estándar de C++ (Y gtk si planea usar la interfaz visual).
 
 ## Instalación
 

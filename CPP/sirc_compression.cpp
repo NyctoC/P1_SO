@@ -77,6 +77,16 @@ vector<int> lzw_compress(const string& input) {
     return compressed;
 }
 
+// El algoritmo LZW genera códigos numéricos, pero estos pueden ser mayores a 255, es decir, pueden necesitar más de un byte para representarse.
+// Como en binario un byte tiene 8 bits, pero solo queremos almacenar 7 bits de información útil por byte,
+// se usa una estrategia para dividir códigos grandes en varios bytes.
+// De ahi proviene el uso de 0x80 y 0x7F en las funciones de lectura y escritura de archivos comprimidos.
+
+// Esta compresión que almacena los códigos funciona usando Variable-Length Quantity (VLQ), una técnica usada en
+// MIDI, Protocol Buffers y DWARF para codificar enteros de manera eficiente en un formato de longitud variable.
+
+// Gracias a esto tampoco estamos desperdiciando bits.
+
 void save_compressed_file(const string& filename, const vector<int>& compressed) {
     ofstream output_file(filename, ios::binary);
     for (int code : compressed) {
