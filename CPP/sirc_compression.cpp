@@ -147,6 +147,47 @@ void save_decompressed_file(const string& filename, const string& content) {
     output_file.close();
 }
 
+// Encryption with euler's theorem
+void encrypt_file(const string& filename, long long e, long long n) {
+    string content = read_file(filename);
+    vector<int> compressed = lzw_compress(content);
+
+    vector<int> encrypted;
+    for (int code : compressed) {
+        long long c = 1;
+        for (int i = 0; i < e; i++) {
+            c = (c * code) % n;
+        }
+        encrypted.push_back(c);
+    }
+
+    string output_filename = string(filename) + ".enc";
+    save_compressed_file(output_filename, encrypted);
+
+    cout << "Archivo encriptado guardado como " << output_filename << "\n";
+}
+
+// Decryption with euler's theorem
+void decrypt_file(const string& filename, long long d, long long n) {
+    vector<int> encrypted = read_compressed_file(filename);
+
+    vector<int> decrypted;
+    for (int code : encrypted) {
+        long long m = 1;
+        for (int i = 0; i < d; i++) {
+            m = (m * code) % n;
+        }
+        decrypted.push_back(m);
+    }
+
+    string decompressed = lzw_decompress(decrypted);
+    string output_filename = string(filename) + "_d";
+
+    save_decompressed_file(output_filename, decompressed);
+
+    cout << "Archivo desencriptado guardado como " << output_filename << "\n";
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         cerr << "Error: No se proporcionaron argumentos. Use -h para ayuda.\n";
@@ -177,16 +218,13 @@ int main(int argc, char* argv[]) {
 
         cout << "Archivo descomprimido guardado como " << output_filename << "\n";
     } else if ((option == "-e" || option == "--encrypt") && argc == 3) {
+        long long e = 65537, n = 3233;  // Valores arbitrarios para pruebas
         cout << "Encriptación de archivo: " << argv[2] << "\n";
+        encrypt_file(argv[2], e, n);
     } else if ((option == "-d" || option == "--decrypt") && argc == 3) {
+        long long d = 2753, n = 3233;  // Valores arbitrarios para pruebas
         cout << "Desencriptación de archivo: " << argv[2] << "\n";
-        vector<int> compressed = read_compressed_file(argv[2]);
-        string decompressed = lzw_decompress(compressed);
-        string output_filename = string(argv[2]) + "_decrypted";
-
-        save_decompressed_file(output_filename, decompressed);
-
-        cout << "Archivo desencriptado guardado como " << output_filename << "\n";
+        decrypt_file(argv[2], d, n);
     } else {
         cerr << "Error: Opción inválida o falta de argumentos. Use -h para ayuda.\n";
         return 1;
