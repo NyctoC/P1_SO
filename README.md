@@ -3,7 +3,7 @@ Parcial 1 Sistemas Operativos - Compresión
 
 # SircComp v2.0
 
-**SircComp** es una herramienta de compresión, descompresión, encriptación y desencriptación de archivos de texto, implementada utilizando el algoritmo LZW (Lempel–Ziv–Welch) y El Teorema de Euler. Esta herramienta está diseñada para usuarios que necesitan manejar archivos de manera eficiente en sistemas Linux y se ofrece tanto como una aplicación de línea de comandos como con una interfaz gráfica simple (Hasta la fecha solo funciona para comprimir).
+**SircComp** es una herramienta de compresión, descompresión, encriptación y desencriptación de archivos de texto, implementada utilizando el algoritmo LZW (Lempel–Ziv–Welch) y El Teorema de Euler. Esta herramienta está diseñada para usuarios que necesitan manejar archivos de manera eficiente en sistemas Linux y se ofrece tanto como una aplicación de línea de comandos como con una interfaz gráfica simple.
 
 ## Características
 
